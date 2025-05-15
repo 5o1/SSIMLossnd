@@ -24,7 +24,7 @@ class AverageConvnd(nn.Module):
     
     def forward(self, input: torch.Tensor) -> torch.Tensor:
         in_channels = input.size(1)
-        kernel = self.kernel.expand(in_channels, 1, *self.kernel.shape)
+        kernel = self.kernel.expand(in_channels, 1, *self.kernel.shape).type_as(input)
         input = self.conv_fn(input, kernel, padding = self.size // 2, groups=in_channels)
         return input
 
@@ -54,6 +54,6 @@ class GaussianConvnd(nn.Module):
     
     def forward(self, input: torch.Tensor) -> torch.Tensor:
         in_channels = input.size(1)
-        kernel = self.kernel.expand(in_channels, 1, *self.kernel.shape)
+        kernel = self.kernel.expand(in_channels, 1, *self.kernel.shape).type_as(input)
         input = self.conv_fn(input, kernel, padding = self.size // 2, groups=in_channels)
         return input
